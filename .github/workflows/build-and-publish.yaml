@@ -2,17 +2,30 @@ name: create zip
 on: push
 
 jobs:
-  build-publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: zip -r youcog.zip . -x ".github/*" -x ".git/*"
-      - run: ls -hal
-      - uses: Passiverecords/chrome-extension-upload-action@1.4.1
+      - name: "Create zip file"
+        run: zip -r youcog.zip . -x ".github/*" -x ".git/*"
+      - name: "Upload Artifact"
+        uses: actions/upload-artifact@v2
         with:
-          refresh-token: 'xxxxxxxxxxxxxxxxxxxxxx'
-          client-id: 'xxxxxxxxxxxxx'
-          client-secret: 'xxxxxxxxxxxx'
-          file-name: './youcog.zip'
-          app-id: 'xdlmao'
-          publish: true
+          name: youcog.zip
+          path: youcog.zip
+          retention-days: 5
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download extension artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: youcog.zip
+      - name: Publish to chrome web store
+        uses: trmcnvn/chrome-addon@v2
+        with:
+          extension: youcog
+          zip: youcog.zip
+          client-id: ${{ secrets.CHROME_CLIENT_ID }}
+          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
