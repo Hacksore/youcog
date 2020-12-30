@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: ls -hal
-      - uses: Klemensas/chrome-extension-upload-action@1.4.1
+      - uses: Passiverecords/chrome-extension-upload-action@1.4.1
         with:
           refresh-token: 'xxxxxxxxxxxxxxxxxxxxxx'
           client-id: 'xxxxxxxxxxxxx'
