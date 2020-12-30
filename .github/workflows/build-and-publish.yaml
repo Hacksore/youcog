@@ -1,0 +1,21 @@
+name: create zip
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: zip -r -x ".git*" youcog.zip .
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls -hal
+      - uses: Klemensas/chrome-extension-upload-action@1.4.1
+        with:
+          refresh-token: 'xxxxxxxxxxxxxxxxxxxxxx'
+          client-id: 'xxxxxxxxxxxxx'
+          client-secret: 'xxxxxxxxxxxx'
+          file-name: './youcog.zip'
+          app-id: 'xdlmao'
+          publish: true
