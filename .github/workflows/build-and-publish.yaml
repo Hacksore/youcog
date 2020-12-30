@@ -2,14 +2,11 @@ name: create zip
 on: push
 
 jobs:
-  build:
+  build-publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: zip -r youcog.zip . -x ".github/*" -x ".git/*"
-  publish:
-    runs-on: ubuntu-latest
-    steps:
       - run: ls -hal
       - uses: Passiverecords/chrome-extension-upload-action@1.4.1
         with:
