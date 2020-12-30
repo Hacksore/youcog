@@ -1,0 +1,18 @@
+.yc-button {
+  background: rgba(0, 0, 0, 0);
+  fill: rgba(214, 214, 214, 0.8);
+  z-index: 9999;
+  position: absolute;
+  bottom: -2px;
+  left: 0px;
+  padding: 6px 6px 0 2px;
+  display: block;
+  cursor: pointer;
+  border-top-right-radius: 16px;
+}
+
+.yc-button:hover {
+  background: rgba(0, 0, 0, 0.5);
+  fill: #fff;
+}
+

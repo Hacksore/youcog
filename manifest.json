@@ -1,0 +1,28 @@
+{
+  "name": "youcog",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Allow youtube videos to open in an incognito window with one click",
+  "homepage_url": "https://github.com/hacksore/youcog",
+  "icons": {
+    "128": "icons/icon128.png"
+  },
+  "browser_action": {
+    "default_title": "Settings",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["/js/background.js"],
+    "persistent": true
+  },
+  "permissions": ["https://www.youtube.com/*"],
+  "content_security_policy": "default-src 'none'; style-src 'self'; script-src 'self'; connect-src https://maps.googleapis.com; img-src data:",
+  "web_accessible_resources": [ "/css/style.css"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["js/content.js"],
+      "css": ["/css/style.css"]
+    }
+  ]
+}
