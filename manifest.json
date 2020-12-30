@@ -15,7 +15,7 @@
     "scripts": ["/js/background.js"],
     "persistent": true
   },
-  "permissions": ["https://www.youtube.com/*"],
+  "permissions": [],
   "content_security_policy": "default-src 'none'; style-src 'self'; script-src 'self'; connect-src https://maps.googleapis.com; img-src data:",
   "web_accessible_resources": [ "/css/style.css"],
   "content_scripts": [

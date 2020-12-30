@@ -3,7 +3,7 @@ console.log("injected youcog script into page");
 function handleButtonClick(event, url) {
   event.preventDefault();
   chrome.runtime.sendMessage({ method: "yt", url }, function (response) {
-    console.log("res");
+
   });
 }
 
@@ -27,7 +27,7 @@ const svgIcon = `
 
 function addButtons() {
   for (let e of thumbs) {
-    if (e.href && !e.hasIncognitoButton) {
+    if (e.href && !e["data-youcog"]) {
       const button = document.createElement("a");
 
       button.innerHTML = svgIcon;
@@ -35,7 +35,9 @@ function addButtons() {
       button.classList = "yc-button";
       button.title = "Open in a new Incognito window";
 
-      e.hasIncognitoButton = true;
+      
+      e["data-youcog"] = true;
+      e.setAttribute("data-youcog", "true");
       e.parentElement.appendChild(button);
     }
   }
@@ -69,6 +71,18 @@ const observer = new MutationObserver(callback);
 
 // Start observing the target node for configured mutations
 observer.observe(targetNode, config);
+
+const isWatchPage = window.location.href.includes("/watch?v");
+const isYoucogPage = window.location.href.includes("youcog=1");
+
+if (isWatchPage && isYoucogPage) {
+  console.log("watching a yt video in a youcog view");
+  // get the video handle
+
+  const video = document.getElementsByTagName("video")[0];
+  console.log(video);
+
+}
 
 // test if we are watching a video and if we should add a pip button 
 // if (window.location.href.includes("/watch?v")) {
