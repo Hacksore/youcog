@@ -1,4 +1,4 @@
-name: create zip
+name: CI
 on: push
 
 jobs:
