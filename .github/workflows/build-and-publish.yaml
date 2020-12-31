@@ -23,8 +23,9 @@ jobs:
           name: youcog.zip
       - name: Publish to chrome web store
         uses: trmcnvn/chrome-addon@v2
+        continue-on-error: true
         with:
-          extension: jnlhbeanefgkikffdjnmajjfadpbfeop
+          extension: fcmmijpbclnjkhkoagbohnkclkcdnfml
           zip: youcog.zip
           client-id: ${{ secrets.CHROME_CLIENT_ID }}
           client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
