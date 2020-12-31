@@ -24,7 +24,7 @@ jobs:
       - name: Publish to chrome web store
         uses: trmcnvn/chrome-addon@v2
         with:
-          extension: youcog
+          extension: jnlhbeanefgkikffdjnmajjfadpbfeop
           zip: youcog.zip
           client-id: ${{ secrets.CHROME_CLIENT_ID }}
           client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
