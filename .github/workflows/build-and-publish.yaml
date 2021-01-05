@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 on: 
   workflow_dispatch:
     inputs:
@@ -26,13 +26,13 @@ jobs:
       - name: Download extension artifact
         uses: actions/download-artifact@v2
         with:
-          name: youcog.zip
+          name: youcog
       - name: Publish to chrome web store
         uses: trmcnvn/chrome-addon@v2
         continue-on-error: true
         with:
           extension: fcmmijpbclnjkhkoagbohnkclkcdnfml
-          zip: youcog.zip
+          zip: youcog
           client-id: ${{ secrets.CHROME_CLIENT_ID }}
           client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
           refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
