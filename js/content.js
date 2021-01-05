@@ -1,10 +1,6 @@
-console.log("injected youcog script into page");
-
 function handleButtonClick(event, url) {
   event.preventDefault();
-  chrome.runtime.sendMessage({ method: "yt", url }, function (response) {
-
-  });
+  chrome.runtime.sendMessage({ method: "yt", url });
 }
 
 const thumbs = document.getElementsByClassName("ytd-thumbnail");
@@ -35,7 +31,6 @@ function addButtons() {
       button.classList = "yc-button";
       button.title = "Open in a new Incognito window";
 
-      
       e["data-youcog"] = true;
       e.setAttribute("data-youcog", "true");
       e.parentElement.appendChild(button);
@@ -46,15 +41,9 @@ function addButtons() {
 // call on load
 addButtons();
 
-// watch for new thumb nails to be added
-// Select the node that will be observed for mutations
 const targetNode = document.body;
-// Options for the observer (which mutations to observe)
 const config = { attributes: true, childList: true, subtree: true };
-
-// Callback function to execute when mutations are observed
 const callback = function (mutationsList, observer) {
-  // Use traditional 'for loops' for IE 11
   for (const mutation of mutationsList) {
     if (
       mutation.type === "childList" &&
@@ -66,28 +55,60 @@ const callback = function (mutationsList, observer) {
   }
 };
 
-// Create an observer instance linked to the callback function
 const observer = new MutationObserver(callback);
-
-// Start observing the target node for configured mutations
 observer.observe(targetNode, config);
 
-const isWatchPage = window.location.href.includes("/watch?v");
+const isEmbedPage = window.location.href.includes("embed/");
 const isYoucogPage = window.location.href.includes("youcog=1");
 
-if (isWatchPage && isYoucogPage) {
-  console.log("watching a yt video in a youcog view");
-  // get the video handle
+function watchForErrorDiv() {
+  return new Promise((resolve) => {
+    const targetNode = document.getElementById("player");
+    const config = { attributes: true, childList: true, subtree: true };
+    const callback = function (mutationsList, observer) {
+      for (const mutation of mutationsList) {
+        if (
+          mutation.type === "childList" &&
+          mutation.target.className === "ytp-error-content-wrap-reason"
+        ) {
+          observer.disconnect();
+          resolve();
+        }
+      }
+    };
 
-  const video = document.getElementsByTagName("video")[0];
-  console.log(video);
-
+    const observer = new MutationObserver(callback);
+    observer.observe(targetNode, config);
+  });
 }
 
-// test if we are watching a video and if we should add a pip button 
-// if (window.location.href.includes("/watch?v")) {
-  // console.log("watching a yt video");
+// TODO: this will only work if the extension is enabled in ingonito
+// need to write some instructions/docs on how to do this
+if (isEmbedPage && isYoucogPage) {
 
-  // const video = document.getElementsByTagName("video")[0];
-  // video.requestPictureInPicture();?
-// }
+  const link = document.createElement("a");
+  link.href = "#";
+  link.className = "copyright-error";
+  link.onclick = function () {
+
+    window.open(window.location.href, "_blank", [
+      "scrollbars=no",
+      "resizable=yes",
+      "status=no",
+      "location=no",
+      "toolbar=no",
+      "menubar=no",
+      "width=800",
+      "height=600"
+    ].join(","));
+  };
+
+  link.innerHTML = `
+    <div>Something went wrong!</div>
+    <div>Click here to open in a new window</div>
+  `;
+
+  watchForErrorDiv().then(() => {
+    document.body.prepend(link);
+  });
+}

@@ -1,5 +1,11 @@
 name: CI
-on: push
+on: 
+  workflow_dispatch:
+    inputs:
+      test:
+        description: 'todo'
+        required: true
+        default: 'todo'
 
 jobs:
   build:

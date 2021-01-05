@@ -1,6 +1,6 @@
 {
   "name": "youcog (beta)",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "manifest_version": 2,
   "description": "Allow youtube videos to open in an incognito window with one click",
   "homepage_url": "https://github.com/hacksore/youcog",
@@ -15,7 +15,7 @@
     "scripts": ["/js/background.js"],
     "persistent": true
   },
-  "permissions": [],
+  "permissions": ["contextMenus"],
   "web_accessible_resources": [ "/css/style.css"],
   "content_scripts": [
     {

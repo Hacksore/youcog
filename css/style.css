@@ -6,18 +6,28 @@
   bottom: -2px;
   left: 0px;
   padding: 6px 6px 0 2px;
-  display: block;
+  display: none;
   cursor: pointer;
-  border-top-right-radius: 16px;
 }
 
 .yc-button:hover {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   fill: #fff;
+  display: block;
 }
 
-video {
-  /* override other styles to make responsive */
-  width: 100%    !important;
-  height: auto   !important;
+.ytd-thumbnail:hover ~ .yc-button {
+  display: block;
+}
+
+.copyright-error {
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgb(202, 33, 33);
+  padding: 4px 6px 4px 6px;
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
 }
